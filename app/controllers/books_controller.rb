@@ -8,11 +8,13 @@ class BooksController < ApplicationController
   end
 
   def create
+   @books = Book.all
    @book = Book.new(book_params)
    if @book.save
+    flash[:notice] = "Book was successfully created."
     redirect_to book_path(@book.id)
    else
-     @books = Book.all
+     flash.now[:alert] = "The workbook was not created successfully."
      render :index
    end
   end
@@ -29,8 +31,10 @@ class BooksController < ApplicationController
   def update
    @book = Book.find(params[:id])
    if @book.update(book_params)
+    flash[:notice] = "Book was successfully created."
     redirect_to book_path(@book.id)
    else
+     flash.now[:alert] = "The workbook was not created successfully."
     render 'books/edit'
    end
   end
